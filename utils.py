@@ -3,20 +3,26 @@ import cv2
 import math
 
 def add_arrow(image, action):
-    # action: [frame_id, steering_angle, -linear_speed]
+    # action: [steering_angle, linear_speed]
     # image: cv2 read image
 
-    start_pos = (320, 400) # TODO: Will change this
+    start_pos = (320, 320) # TODO: Will change this
+    # print('action: {}'.format(action))
 
     # Calculate the length according the linear speed
     # The maximum velocity is 0.2 m/s
-    arrow_len = 100 * abs(action[1])/0.2 # TODO: check this again
+    arrow_len = 100 * abs(action[1])/0.6 # TODO: check this again
 
     # Calculate the ending point
     action_x = math.ceil(arrow_len * math.sin(action[0]))
     action_y = math.ceil(arrow_len * math.cos(action[0]))
 
-    end_pos = (start_pos[0] - action_x, start_pos[1] - action_y)
+    # Signs are for pictures:
+    # up means negative in y pixel axis, and right means positive 
+    if action[1] > 0:
+        end_pos = (start_pos[0] + action_x, start_pos[1] - action_y)
+    else:
+        end_pos = (start_pos[0] - action_x, start_pos[1] + action_y)
 
     cv2.arrowedLine(image, start_pos, end_pos, (0,255,255), 6)
     image[start_pos[0]-1:start_pos[0]+1, start_pos[1]-1:start_pos[1]+1] = (0,0,0)

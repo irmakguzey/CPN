@@ -35,8 +35,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     exps = [
-            dict(batch_size=[128], lr=[1e-3], weight_decay=[1e-6], z_dim=[8]),
-            dict(root=['data/28012018_111425']),
+            dict(batch_size=[128], lr=[1e-3], weight_decay=[1e-6], z_dim=[8])
             ]
 
     exps = construct_variants(exps)
